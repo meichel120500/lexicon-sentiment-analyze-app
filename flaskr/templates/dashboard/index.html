@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="p-4 mt-14">
+    <div class="grid grid-cols-4 gap-4 mb-4">
+       <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+          <p class="text-2xl text-gray-400 dark:text-gray-500">Total Data</p>
+          <h1 class="text-4xl text-gray-700 dark:text-gray-300 ml-4">
+             {{ total_comments}}
+          </h1>   
+       </div>
+       <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+          <p class="text-2xl text-gray-400 dark:text-gray-500">Positive</p>
+            <h1 class="text-4xl text-green-500 dark:text-green-400 ml-4">
+                 {{ total_positive }}
+            </h1>
+       </div>
+       <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+          <p class="text-2xl text-gray-400 dark:text-gray-500">Negative</p>
+            <h1 class="text-4xl text-red-500 dark:text-red-400 ml-4">
+                 {{ total_negative }}
+            </h1>
+       </div>
+       <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+          <p class="text-2xl text-gray-400 dark:text-gray-500">Neutral</p>
+            <h1 class="text-4xl text-blue-500 dark:text-blue-400 ml-4">
+                 {{ total_neutral }}
+            </h1>
+       </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="items-center justify-center rounded bg-gray-50 h-auto dark:bg-gray-800">
+          <h5 class="p-4 text-xl font-bold text-gray-900 dark:text-white me-1">Website traffic</h5>
+          <div class="py-6 w-full" id="pie-chart"></div>
+        </div>
+        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+                <!-- Content for the second div -->
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+  const getChartOptions = () => {
+    return {
+      series: [{{ total_positive }}, {{ total_negative }}, {{ total_neutral }}],
+      colors: ["#34D399", "#EF4444", "#3B82F6"],
+      chart: {
+        height: 420,
+        width: "100%",
+        type: "pie",
+      },
+      stroke: {
+        colors: ["white"],
+        lineCap: "",
+      },
+      plotOptions: {
+        pie: {
+          labels: {
+            show: true,
+          },
+          size: "100%",
+          dataLabels: {
+            offset: -25
+          }
+        },
+      },
+      labels: ["Positive", "Negative", "Neutral"],
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontFamily: "Inter, sans-serif",
+        },
+      },
+      legend: {
+        position: "bottom",
+        fontFamily: "Inter, sans-serif",
+      },
+      yaxis: {
+        labels: {
+          formatter: function (value) {
+            return value + "%"
+          },
+        },
+      },
+      xaxis: {
+        labels: {
+          formatter: function (value) {
+            return value  + "%"
+          },
+        },
+        axisTicks: {
+          show: false,
+        },
+        axisBorder: {
+          show: false,
+        },
+      },
+    }
+  }
+
+  if (document.getElementById("pie-chart") && typeof ApexCharts !== 'undefined') {
+    const chart = new ApexCharts(document.getElementById("pie-chart"), getChartOptions());
+    chart.render();
+  }
+</script>
+{% endblock %}
+

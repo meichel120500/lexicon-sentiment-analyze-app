@@ -1,0 +1,5 @@
+/__pycache__/
+/flaskr/__pycache__/
+/flaskr/node_modules/
+/instance/flaskr.sqlite
+/storage/temp/csv/*

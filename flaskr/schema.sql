@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS comments;
+
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password TEXT NOT NULL
+);
+
+CREATE TABLE comments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  comment TEXT NOT NULL,
+  preprocessed_comment TEXT NOT NULL,
+  sentiment_score INTEGER NOT NULL,
+  sentiment_label VARCHAR(50) NOT NULL
+);

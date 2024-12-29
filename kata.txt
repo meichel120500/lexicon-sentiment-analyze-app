@@ -1,0 +1,100 @@
+fleksibel:mudah menyesuaikan
+good: bagus
+campus: kampus
+study:belajar
+undergraduated:sarjana
+level:tingkat
+adequate:memadai
+facilitaties:fasilitas
+good:bagus
+lecturers :dosen
+courses:pelajaran
+relevant:berkaitan
+study:belajar
+choice:pilihan
+not:tidak
+mean:arti
+have:mempunyai
+sekaimantan:se kalimantan
+best:terbaik
+tmpt:tempat
+dosendosennya:dosen dosen
+baikmemiliki:baik memiliki
+samarindamenyala:kerenn
+propinsidi:provinsi
+sudha:sudah
+yaminmaju:maju
+pttruangan: ruangan
+dosenya:dosen
+friendly:bersahabat
+erti:paham
+notabene:yang perlu diperhatikan
+elegan:indah
+programmer:orang yang ahli program
+profesional:berpengalaman
+kereeeeen:keren
+kayaa:kaya
+smoga :semoga
+slalu:selalu
+walaupum:walaupun
+computer:komputer
+dng :dengan
+nolong:tolong
+ane:saya
+baikbaik :baik baik
+qw:aku
+dtg:datang 
+dosendosen:dosen
+baguspelayanannya:bagus pelayanan
+q:aku
+recommended:direkomendasi
+memory:ingatan
+great:bagus
+places:tempat
+bravo:bagus
+fairly:secara adil
+field:bidang
+course:kuliah
+advantages:keuntungan
+disadvantages:kekurangan
+several:beberapa
+aspects:aspek
+example :contoh
+some:beberapa
+computers:komputer
+lab:laboratorium
+slow:lambat
+wifi:jaringan 
+sometimes:kadang
+classes: kelas
+small:kecil
+aksesibilitas:kemudahan akses
+kalok:kalau
+minus:kurang
+aj:aja
+where:dimana
+darkness:kegelapan
+light:cahaya
+ruangruang:ruangan
+okee:oke
+smd:samarinda
+acnya:pendingin
+coding:pemrograman
+berkelass:keren
+wonderful:hebat
+university:universitas
+pasilitasnya:fasilitas
+nongkrongnya:berkumpul
+matkul:mata kuliah
+kelazz:keren
+gpapa:tidak apa apa
+hardwarenya:perangkat keras
+up:atas
+please:tolong
+lagging:tertinggal
+baimenurut:baik menurut
+luasterus:luas terus
+baikpp:baik
+krenn:keren
+it:informatika
+
