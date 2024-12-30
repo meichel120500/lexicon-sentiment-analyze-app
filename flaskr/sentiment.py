@@ -119,3 +119,13 @@ def create():
             }
 
     return render_template('sentiment/create.html', result=result)
+    
+
+@bp.route('/sentiment/delete', methods=('POST',))
+@login_required
+def delete():
+    db = get_db()
+    db.execute('DELETE FROM comments')
+    db.commit()
+    
+    return redirect(url_for('sentiment.index'))

@@ -32,13 +32,14 @@
     </div>
     <div class="grid grid-cols-2 gap-4 mb-4">
         <div class="items-center justify-center rounded bg-gray-50 h-auto dark:bg-gray-800">
-          <h5 class="p-4 text-xl font-bold text-gray-900 dark:text-white me-1">Website traffic</h5>
+          <h5 class="p-4 text-xl font-bold text-gray-900 dark:text-white me-1">Sentiment Analysis</h5>
           <div class="py-6 w-full" id="pie-chart"></div>
         </div>
-        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-                <!-- Content for the second div -->
-            </p>
+        <div class="items-center justify-center rounded bg-gray-50 h-auto dark:bg-gray-800">
+          <div class="py-6 px-4">
+            <h5 class="text-xl font-bold text-gray-900 dark:text-white">Wordcloud</h5>
+            <img src="{{ url_for('static', filename='wordcloud.png') }}" alt="Wordcloud">
+          </div>
         </div>
     </div>
 </div>

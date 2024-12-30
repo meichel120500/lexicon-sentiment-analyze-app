@@ -1,5 +1,8 @@
 /__pycache__/
 /flaskr/__pycache__/
 /flaskr/node_modules/
+/flaskr/static/wordcloud.png
+/flaskr/static/dist/css/output.css
 /instance/flaskr.sqlite
 /storage/temp/csv/*
+/venv
