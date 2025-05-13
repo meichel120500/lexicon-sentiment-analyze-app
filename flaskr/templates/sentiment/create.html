@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}New Prediction{% endblock %}
+{% block title %}Labelling{% endblock %}
 
 {% block content %}
-<h1 class="mt-14 text-2xl font-semibold text-gray-900 dark:text-white">New Prediction</h1>
-<div class="p-4 mt-4 bg-gray-400 dark:bg-gray-800 dark:border-gray-700 w-3/5 rounded-lg">
+<h1 class="mt-14 text-2xl font-semibold text-gray-900 dark:text-white">New Labelling</h1>
+<div style="padding: 16px; margin-top: 16px; background-color: #F5F5DC; width: 60%; border-radius: 8px;">
   <form class="max-w-sm" method="post">
-    <label for="comment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Statement</label>
-    <textarea id="comment" rows="4" name="comment" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-purple-500 focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500" placeholder="Leave a comment...">{{ request.form['comment'] }}</textarea>
-    <button type="submit" value="save" class="mt-2 flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+    <label for="comment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comment</label>
+    <textarea id="comment" rows="4" name="comment" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment...">{{ request.form['comment'] }}</textarea>
+    <button type="submit" value="save" class="mt-2 flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
       Predict
     </button>
   </form>

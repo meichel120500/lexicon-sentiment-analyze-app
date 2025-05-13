@@ -2,89 +2,70 @@ import pandas as pd
 import re
 from flask import Flask, request, jsonify
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
+from functools import lru_cache
 
 # Load lexicon-based sentiment analysis
 positive_df = pd.read_csv('positive.tsv', sep='\t')
 negative_df = pd.read_csv('negative.tsv', sep='\t')
 
-# Verify the column names
-print(positive_df.columns)
-print(negative_df.columns)
-
 # Create the lexicon from datasets
-indonesian_lexicon = {}
-
-# Add positive words to lexicon with their weight
-for _, row in positive_df.iterrows():
-    indonesian_lexicon[row['word']] = row['weight']
-
-# Add negative words to lexicon with their weight
-for _, row in negative_df.iterrows():
-    indonesian_lexicon[row['word']] = row['weight']
+indonesian_lexicon = {row['word']: row['weight'] for _, row in positive_df.iterrows()}
+indonesian_lexicon.update({row['word']: row['weight'] for _, row in negative_df.iterrows()})
 
 # Initialize the app
 app = Flask(__name__)
 
-# Text cleaning
-def clean_text(text):
-    # Remove emoticons, numbers, and special characters
-    text = re.sub(r'[^\w\s]', '', text)
+# Global variables for preprocessing
+factory = StemmerFactory()
+stemmer = factory.create_stemmer()
 
-    # Transform text to lowercase
-    text = text.lower()
+# Load slang words from file
+slang_words = {}
+with open('kamuskatabaku.txt') as f:
+    for line in f:
+        if ',' in line:
+            key, value = line.strip().split(',')
+            slang_words[key] = value
+
+# Load formal words from file
+formal_words = {}
+with open('kamuskatabaku.txt') as f:
+    for line in f:
+        if ',' in line:
+            key, value = line.strip().split(',')
+            formal_words[key] = value
+
+# Load stopwords
+with open('combined_stop_words.txt') as f:
+    stop_words = set(line.strip() for line in f)
+
+# Text cleaning
+@lru_cache(maxsize=1024)
+def clean_text(text):
+    # Remove URLs, mentions, hashtags, digits, non-alphabetic characters, and extra spaces
+    text = re.sub(r'http[s]?://\S+|@\w+|#\w+|\d+|[^a-zA-Z\s]', '', text)
+    text = re.sub(r'\s+', ' ', text).strip().lower()
 
     # Tokenize the text
     words = text.split()
 
-    # Normalize the words with dictionary 'slangwords.txt' the file format is 'singkatan:panjang'
-    slang_words = {}
-    with open('slangwords.txt') as f:
-        for line in f:
-            parts = line.strip().split(':')
-            if len(parts) == 2:
-                slang, formal = parts
-                slang_words[slang] = formal
-
+    # Normalize using slang words and formal words
     words = [slang_words.get(word, word) for word in words]
-
-    # Normalize it too with another dictionary 'kata.txt' the file format is 'singkatan:panjang'
-    formal_words = {}
-    with open('kata.txt') as f:
-        for line in f:
-            parts = line.strip().split(':')
-            if len(parts) == 2:
-                slang, formal = parts
-                formal_words[slang] = formal
-
     words = [formal_words.get(word, word) for word in words]
 
-    # Remove stopwords with stopwords dictionary 'combined_stop_words.txt' the file format is 'stopword'
-    stop_words = set()
-    with open('combined_stop_words.txt') as f:
-        for line in f:
-            stop_words.add(line.strip())
+    # Remove stopwords but retain meaningful words for sentiment analysis
+    meaningful_words = [word for word in words if word not in stop_words or word in indonesian_lexicon]
 
-    words = [word for word in words if word not in stop_words]
+    # Stem the words
+    stemmed_words = [stemmer.stem(word) for word in meaningful_words]
 
-    # Stemming the words with Sastrawi
-    factory = StemmerFactory()
-    stemmer = factory.create_stemmer()
-
-    words = [stemmer.stem(word) for word in words]
-
-    return words
+    return stemmed_words
 
 def analyze_sentiment(text):
     # Split the text into words
     words = clean_text(text)
-    # Initialize the sentiment score
-    sentiment_score = 0
-    # Loop through all the words
-    for word in words:
-        # If the word is in the lexicon, add the weight to the sentiment score
-        if word in indonesian_lexicon:
-            sentiment_score += indonesian_lexicon[word]
-    # Return the sentiment score
+    # Compute the sentiment score
+    sentiment_score = sum(indonesian_lexicon.get(word, 0) for word in words)
     return sentiment_score
 
 @app.route('/analyze', methods=['POST'])
@@ -95,16 +76,20 @@ def analyze():
 
     if sentiment_score > 0:
         sentiment = 'positive'
-    elif sentiment_score < 0:
-        sentiment = 'negative'
     else:
-        sentiment = 'neutral'
+        sentiment = 'negative'
 
     return jsonify({
         'cleaned_text': ' '.join(clean_text(text)),
         'sentiment_score': sentiment_score,
         'sentiment': sentiment
     })
+# Tambahkan endpoint untuk membersihkan cache
+@app.route('/clear_cache', methods=['POST'])
+def clear_cache():
+    # Membersihkan cache dari fungsi clean_text
+    clean_text.cache_clear()
+    return jsonify({"message": "Cache berhasil dibersihkan"})
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -8,7 +8,7 @@
        <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
           <p class="text-2xl text-gray-400 dark:text-gray-500">Total Data</p>
           <h1 class="text-4xl text-gray-700 dark:text-gray-300 ml-4">
-             {{ total_comments}}
+             {{ total_comments }}
           </h1>   
        </div>
        <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
@@ -23,31 +23,44 @@
                  {{ total_negative }}
             </h1>
        </div>
-       <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">Neutral</p>
-            <h1 class="text-4xl text-blue-500 dark:text-blue-400 ml-4">
-                 {{ total_neutral }}
-            </h1>
-       </div>
     </div>
     <div class="grid grid-cols-2 gap-4 mb-4">
         <div class="items-center justify-center rounded bg-gray-50 h-auto dark:bg-gray-800">
-          <h5 class="p-4 text-xl font-bold text-gray-900 dark:text-white me-1">Sentiment Analysis</h5>
+          <h5 class="p-4 text-xl font-bold text-gray-900 dark:text-white me-1">Pie chart</h5>
           <div class="py-6 w-full" id="pie-chart"></div>
         </div>
         <div class="items-center justify-center rounded bg-gray-50 h-auto dark:bg-gray-800">
-          <div class="py-6 px-4">
-            <h5 class="text-xl font-bold text-gray-900 dark:text-white">Wordcloud</h5>
-            <img src="{{ url_for('static', filename='wordcloud.png') }}" alt="Wordcloud">
-          </div>
-        </div>
+          {% if positive_wordcloud_exists %}
+            <div class="py-6 px-4">
+              <h5 class="text-xl font-bold text-gray-900 dark:text-white">Wordcloud - Positive</h5>
+              <img src="{{ url_for('static', filename='positive_wordcloud.png') }}" alt="Positive Wordcloud">
+            </div>
+          {% else %}
+            <div class="py-6 px-4">
+              <h5 class="text-xl font-bold text-gray-900 dark:text-white">Wordcloud - Positive</h5>
+              <p class="text-gray-500 dark:text-gray-300">Tidak ada data positif untuk menghasilkan WordCloud.</p>
+            </div>
+          {% endif %}
+        
+          {% if negative_wordcloud_exists %}
+            <div class="py-6 px-4">
+              <h5 class="text-xl font-bold text-gray-900 dark:text-white">Wordcloud - Negative</h5>
+              <img src="{{ url_for('static', filename='negative_wordcloud.png') }}" alt="Negative Wordcloud">
+            </div>
+          {% else %}
+            <div class="py-6 px-4">
+              <h5 class="text-xl font-bold text-gray-900 dark:text-white">Wordcloud - Negative</h5>
+              <p class="text-gray-500 dark:text-gray-300">Tidak ada data negatif untuk menghasilkan WordCloud.</p>
+            </div>
+          {% endif %}
+        </div>        
     </div>
 </div>
 
 <script>
   const getChartOptions = () => {
     return {
-      series: [{{ total_positive }}, {{ total_negative }}, {{ total_neutral }}],
+      series: [{{ total_positive }}, {{ total_negative }}],
       colors: ["#34D399", "#EF4444", "#3B82F6"],
       chart: {
         height: 420,
@@ -69,7 +82,7 @@
           }
         },
       },
-      labels: ["Positive", "Negative", "Neutral"],
+      labels: ["Positive", "Negative"],
       dataLabels: {
         enabled: true,
         style: {
@@ -109,4 +122,3 @@
   }
 </script>
 {% endblock %}
-
